@@ -1,6 +1,6 @@
 
 var moment = require('moment');
-
+var current = moment.valueOf();
 var generateMessage = (from, text)=> {
     return {
         from,

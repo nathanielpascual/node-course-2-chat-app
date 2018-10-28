@@ -31,7 +31,7 @@ describe('Users',()=>
         var users = new Users();
         
         var user = {
-            id :'123',
+            id :'123',1.
             name : 'nathan',
             room : 'joe'
         };

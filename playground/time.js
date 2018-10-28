@@ -12,3 +12,6 @@ var date = moment(createdAt);
 
 console.log(date.format('h:mm a'));
 
+var current = moment().valueOf();
+console.log(moment().valueOf());
+
