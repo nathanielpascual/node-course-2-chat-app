@@ -27,11 +27,12 @@ describe('Users',()=>
             room : 'B'
         }];
     });
+    
     it('should add new user',() => {
         var users = new Users();
         
         var user = {
-            id :'123',1.
+            id :'123',
             name : 'nathan',
             room : 'joe'
         };

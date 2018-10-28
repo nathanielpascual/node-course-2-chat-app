@@ -68,7 +68,7 @@ button:disabled {
     width: 230px
 }
 
-.form-field {
+.form-field  {
     margin: 20px 0
 }
 
@@ -76,7 +76,7 @@ button:disabled {
     width: 100%
 }
 
-.form-field label {
+.form-field label{
     display: block;
     margin-bottom: 7px
 }
@@ -85,6 +85,23 @@ button:disabled {
 .form-field select {
     border: 1px solid #e1e1e1;
     padding: 10px
+}
+
+#form-field-err  {
+    margin: 20px 0;
+}
+
+#form-field-err >*
+{
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border:1px solid red;
+    width: 100%;
+    padding: 10px;
+}
+#form-field label {
+    display: block;
+    margin-bottom: 7px;
 }
 
 .chat {
@@ -156,7 +173,37 @@ button:disabled {
 }
 
 .message {
-    padding: 10px
+    padding:5px;
+}
+.message__container {
+    padding:10px;
+    width:100%;
+    margin-bottom: 3px;
+    display : flex;
+    flex-direction: column;
+    min-height:1vh;
+    max-height: 50vh;
+}
+
+.clear {
+    clear: both;
+}
+
+.pull-right{
+    justify-content: flex-end;
+   
+}
+
+.pull-left{
+    justify-content: flex-start;
+}
+
+.dark {
+    background-color:#245d80;
+}
+
+.light {
+    background-color: #d5d9dd;
 }
 
 .message__title {
@@ -166,11 +213,16 @@ button:disabled {
 
 .message__title h4 {
     font-weight: 600;
-    margin-right: 10px
+    margin-right: 10px;
 }
 
 .message__title span {
-    color: #999
+    color: #999;
+}
+
+.message__body
+{
+    display:flex;
 }
 
 @media (max-width:600px) {

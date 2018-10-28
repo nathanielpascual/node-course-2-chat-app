@@ -9,6 +9,7 @@ class Users {
             id,name,room
         };
 
+
         this.users.push(user);
 
         return user;
@@ -28,6 +29,11 @@ class Users {
     getUser(id)
     {
         return this.users.filter((user)=> user.id===id)[0];
+    }
+
+    getUserByName(name)
+    {
+        return this.users.filter((user)=>user.name.toLowerCase().trim() === name.toLowerCase().trim())[0];
     }
 
     getUserList(room)

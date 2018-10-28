@@ -1,8 +1,27 @@
+
+
 var socket = io();
 
+function scrollToBottom() {
+    // Selectors
+    var messages = jQuery('#messages');
+    var newMessage = messages.children('li:last-child');
+    // Heights
+    var clientHeight = messages.prop('clientHeight');
+    var scrollTop = messages.prop('scrollTop');
+    var scrollHeight = messages.prop('scrollHeight');
+    var newMessageHeight = newMessage.innerHeight();
+    var lastMessageHeight = newMessage.prev().innerHeight();
+
+    if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+        messages.scrollTop(scrollHeight);
+    }
+}
+
 socket.on('connect',function () {
-    console.log('Connected to server');
-    var params = jQuery.deparam(window.location.search);
+    console.log('Connect');
+   
+   var params = jQuery.deparam(window.location.search);
 
     socket.emit('join',params,function (err){
         if(err){
@@ -18,6 +37,7 @@ socket.on('connect',function () {
 });
 
 socket.on('newMessage', function(message) {
+    var params = jQuery.deparam(window.location.search);
     var formattedTime = moment(message.createdAt).format('h:mm a');
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template,{
@@ -27,6 +47,36 @@ socket.on('newMessage', function(message) {
     });
 
     jQuery('#messages').append(html);
+
+     var list = jQuery('#messages').children('li:last-child');
+     var title = jQuery('.message__title');
+     var body; 
+     var name = '';
+
+     jQuery('.message__title h4').each(function(){
+         if($(this).text()===params.name)
+         {
+          if(message.from === params.name) {
+                $(this).parent().parent().removeClass('message_container');
+                $(this).parent().parent().addClass('message__container dark');
+                $(this).parent().removeClass('message__title');
+                $(this).parent().addClass('message__title pull-right clear');
+                body = $(this).parent().parent().children('.message__body');
+                body.removeClass('message__body'); 
+                body.addClass('message__body pull-right clear');
+            }
+         }
+         else
+         {
+            $(this).parent().parent().removeClass('message_container');
+            $(this).parent().parent().addClass('message__container light');
+         }
+     });
+
+    // if (message.from === 'Admin') {
+    //     list.css({'display':'table', 'margin':'0 auto'});
+    // }
+    scrollToBottom();
 });
 
 socket.on('disconnect',function () {
@@ -45,6 +95,7 @@ socket.on('updateUserList',function(users){
 });
 
 socket.on('newLocationMessage', function(message){
+    var params = jQuery.deparam(window.location.search);
     var formattedTime = moment(message.createdAt).format('h:mm a');
 
     var template = jQuery("#location-message-template").html();
@@ -55,6 +106,28 @@ socket.on('newLocationMessage', function(message){
     });
 
     jQuery('#messages').append(html);
+    
+    var list = jQuery('#messages').children('li:last-child');
+    jQuery('.message__title h4').each(function(){
+        if($(this).text()===params.name)
+        {
+         if(message.from === params.name) {
+               $(this).parent().parent().removeClass('message_container');
+               $(this).parent().parent().addClass('message__container dark');
+               $(this).parent().removeClass('message__title');
+               $(this).parent().addClass('message__title pull-right clear');
+               body = $(this).parent().parent().children('.message__body');
+               body.removeClass('message__body'); 
+               body.addClass('message__body pull-right clear');
+           }
+        }
+        else
+        {
+           $(this).parent().parent().removeClass('message_container');
+           $(this).parent().parent().addClass('message__container light');
+        }
+    });
+    scrollToBottom();
 });
 
 
@@ -90,3 +163,4 @@ locationButton.on('click', function(e){
     });
     e.preventDefault();
 });
+
